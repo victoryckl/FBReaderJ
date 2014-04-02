@@ -47,7 +47,7 @@ public class FileUtils {
      *            {@link IFile}
      * @return the resource icon ID
      */
-    public static int getResIcon(IFile file) {
+    public static int getResIcon(IFile file, final IFileProvider.FilterMode filterMode) {
         if (file == null || !file.exists())
             return 0;//android.R.drawable.ic_delete;
 
@@ -59,11 +59,15 @@ public class FileUtils {
 
             return R.drawable.afc_file;
         } else if (file.isDirectory()){
-            if(file instanceof File && !((File)file).canWrite()){
-                if(file instanceof ParentFile){
-                    return R.drawable.afc_folder;
+            if(filterMode != IFileProvider.FilterMode.AnyDirectories){
+                if(file instanceof File && !((File)file).canWrite()){
+                    if(file instanceof ParentFile){
+                        return R.drawable.afc_folder;
+                    }else{
+                        return R.drawable.afc_folder_locked;
+                    }
                 }else{
-                    return R.drawable.afc_folder_locked;
+                    return R.drawable.afc_folder;
                 }
             }else{
                 return R.drawable.afc_folder;

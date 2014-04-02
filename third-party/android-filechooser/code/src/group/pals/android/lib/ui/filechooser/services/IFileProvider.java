@@ -98,7 +98,8 @@ public interface IFileProvider {
         /**
          * User can choose files or directories
          */
-        FilesAndDirectories
+        FilesAndDirectories,
+        AnyDirectories
     }// _FilterMode
 
     /**

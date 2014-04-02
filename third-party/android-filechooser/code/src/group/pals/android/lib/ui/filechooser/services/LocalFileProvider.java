@@ -178,6 +178,7 @@ public class LocalFileProvider extends FileProviderService {
                 return pathname.getName().matches(getRegexFilenameFilter());
             return true;
 
+        case AnyDirectories:
         case DirectoriesOnly:
             return pathname.isDirectory();
 

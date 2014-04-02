@@ -289,7 +289,7 @@ public class IFileAdapter extends BaseAdapter {
         bag.mTxtFileName.setSingleLine(parent instanceof GridView);
 
         // file icon
-        bag.mImageIcon.setImageResource(FileUtils.getResIcon(file));
+        bag.mImageIcon.setImageResource(FileUtils.getResIcon(file, mFilterMode));
 
         // filename
         bag.mTxtFileName.setText(file.getSecondName());

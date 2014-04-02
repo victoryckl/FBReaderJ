@@ -36,6 +36,8 @@ import org.geometerplus.android.fbreader.preferences.PreferenceActivity;
 import android.os.Parcelable;
 import android.content.Intent;
 import group.pals.android.lib.ui.filechooser.FileChooserActivity;
+import group.pals.android.lib.ui.filechooser.services.IFileProvider;
+import group.pals.android.lib.ui.filechooser.services.IFileProvider.FilterMode;
 import group.pals.android.lib.ui.filechooser.io.localfile.LocalFile;
 
 public abstract class FileChooserPreference extends Preference {
@@ -54,8 +56,11 @@ public abstract class FileChooserPreference extends Preference {
         Intent intent = new Intent(getContext(), FileChooserActivity.class);
         intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(getPath()));
         intent.putExtra(FileChooserActivity._ActionBar, true);
-        intent.putExtra(FileChooserActivity._FileSelectionMode, false);
         intent.putExtra(FileChooserActivity._SaveLastLocation, false);
+        //intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.AnyDirectories);
+        //intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.FilesOnly);
+        //intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.FilesAndDirectories);
+        intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
         ((Activity)getContext()).startActivityForResult(intent, myRegCode);
 	}
 }

@@ -69,12 +69,16 @@ public class PreferenceActivity extends ZLPreferenceActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK){
-            String path = (String)data.getSerializableExtra(FileChooserActivity._FolderPath);
-            for(HashMap.Entry<Integer, Preference> entry : myPreferenceMap.entrySet()) {
-                if(entry.getKey() == requestCode){
-                    final Preference ref = entry.getValue();
-                    ref.setSummary(path);
-                    break;
+            if(data.hasExtra(FileChooserActivity._FolderPath)){
+                String path = (String)data.getSerializableExtra(FileChooserActivity._FolderPath);
+                if(path != null && !path.isEmpty()){
+                    for(HashMap.Entry<Integer, Preference> entry : myPreferenceMap.entrySet()) {
+                        if(entry.getKey() == requestCode){
+                            final Preference ref = entry.getValue();
+                            ref.setSummary(path);
+                            break;
+                        }
+                    }
                 }
             }
         }
