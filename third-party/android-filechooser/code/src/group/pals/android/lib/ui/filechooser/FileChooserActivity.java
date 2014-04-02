@@ -602,7 +602,7 @@ public class FileChooserActivity extends Activity {
 
                     // current location
                     IFile path = savedInstanceState != null ? (IFile) savedInstanceState.get(_CurrentLocation) : null;
-
+                    
                     // selected file
                     IFile selectedFile = null;
                     if (path == null) {
@@ -1395,6 +1395,11 @@ public class FileChooserActivity extends Activity {
                     mHistory.truncateAfter(mLastPath);
                     mHistory.push(dir);
                     mFullHistory.push(dir);
+                    if(!(((File) dir).canWrite()) ){
+                        mBtnOk.setEnabled(false);
+                    }else{
+                        mBtnOk.setEnabled(true);
+                    }
                 }
             }
         });
