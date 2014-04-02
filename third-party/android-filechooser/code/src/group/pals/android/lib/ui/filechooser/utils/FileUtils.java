@@ -49,7 +49,7 @@ public class FileUtils {
      */
     public static int getResIcon(IFile file) {
         if (file == null || !file.exists())
-            return android.R.drawable.ic_delete;
+            return 0;//android.R.drawable.ic_delete;
 
         if (file.isFile()) {
             String filename = file.getName();
@@ -70,7 +70,7 @@ public class FileUtils {
             }
         }
 
-        return android.R.drawable.ic_delete;
+        return 0;//android.R.drawable.ic_delete;
     }// getResIcon()
 
     /**
