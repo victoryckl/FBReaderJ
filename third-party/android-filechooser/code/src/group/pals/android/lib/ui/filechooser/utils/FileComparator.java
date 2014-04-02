@@ -44,7 +44,7 @@ public class FileComparator implements Comparator<IFile> {
     public int compare(IFile lhs, IFile rhs) {
         if ((lhs.isDirectory() && rhs.isDirectory()) || (lhs.isFile() && rhs.isFile())) {
             // default is to compare by name (case insensitive)
-            int res = lhs.getName().compareToIgnoreCase(rhs.getName());
+            int res = lhs.getSecondName().compareToIgnoreCase(rhs.getSecondName());
 
             switch (mSortType) {
             case SortByName:

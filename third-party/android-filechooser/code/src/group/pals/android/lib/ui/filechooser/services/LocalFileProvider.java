@@ -10,6 +10,7 @@ package group.pals.android.lib.ui.filechooser.services;
 import group.pals.android.lib.ui.filechooser.io.IFile;
 import group.pals.android.lib.ui.filechooser.io.IFileFilter;
 import group.pals.android.lib.ui.filechooser.io.localfile.LocalFile;
+import group.pals.android.lib.ui.filechooser.io.localfile.ParentFile;
 import group.pals.android.lib.ui.filechooser.utils.FileComparator;
 
 import java.io.File;
@@ -75,6 +76,11 @@ public class LocalFileProvider extends FileProviderService {
         final List<IFile> _files = new ArrayList<IFile>();
 
         try {
+            
+            IFile root = dir.parentFile();
+            if (root.parentFile() == null && LocalFileProvider.this.accept(root))
+                _files.add(root);
+
             File[] files = ((File) dir).listFiles(new FileFilter() {
 
                 @Override
@@ -110,6 +116,10 @@ public class LocalFileProvider extends FileProviderService {
 
         try {
             final List<IFile> _files = new ArrayList<IFile>();
+            
+            IFile root = dir.parentFile();
+            if (root.parentFile() == null)
+                _files.add(root);
 
             File[] files = ((File) dir).listFiles(new FileFilter() {
 
@@ -135,6 +145,10 @@ public class LocalFileProvider extends FileProviderService {
 
         final List<IFile> _res = new ArrayList<IFile>();
         try {
+            IFile root = dir.parentFile();
+            if (root.parentFile() == null || filter == null || filter.accept(root))
+                _res.add(root);
+            
             File[] files = ((File) dir).listFiles(new FileFilter() {
 
                 @Override

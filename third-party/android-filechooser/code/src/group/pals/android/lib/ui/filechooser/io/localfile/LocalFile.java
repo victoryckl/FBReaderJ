@@ -36,12 +36,16 @@ public class LocalFile extends File implements IFile {
     public LocalFile(File file) {
         this(file.getAbsolutePath());
     }// LocalFile()
-
+   
     @Override
     public IFile parentFile() {
-        return getParent() == null ? null : new LocalFile(getParent());
+        return getParent() == null ? null : new ParentFile(getParent());
     }// parentFile()
 
+    public String getSecondName() {
+        return getName();
+    }// getSecondName()
+    
     /**
      * By default, {@link File} compares to another one by its pathname. So if
      * two different {@link File}'s have same pathname, they are equal. But to

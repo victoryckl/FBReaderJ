@@ -292,7 +292,7 @@ public class IFileAdapter extends BaseAdapter {
         bag.mImageIcon.setImageResource(FileUtils.getResIcon(file));
 
         // filename
-        bag.mTxtFileName.setText(file.getName());
+        bag.mTxtFileName.setText(file.getSecondName());
         // check if this file has been marked as to be deleted or not
         if (data.isTobeDeleted())
             bag.mTxtFileName.setPaintFlags(bag.mTxtFileName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);

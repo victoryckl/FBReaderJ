@@ -9,6 +9,7 @@ package group.pals.android.lib.ui.filechooser.utils;
 
 import group.pals.android.lib.ui.filechooser.R;
 import group.pals.android.lib.ui.filechooser.io.IFile;
+import group.pals.android.lib.ui.filechooser.io.localfile.ParentFile;
 import group.pals.android.lib.ui.filechooser.services.IFileProvider;
 
 import java.io.File;
@@ -59,7 +60,11 @@ public class FileUtils {
             return R.drawable.afc_file;
         } else if (file.isDirectory()){
             if(file instanceof File && !((File)file).canWrite()){
-                return R.drawable.afc_folder_locked;
+                if(file instanceof ParentFile){
+                    return R.drawable.afc_folder;
+                }else{
+                    return R.drawable.afc_folder_locked;
+                }
             }else{
                 return R.drawable.afc_folder;
             }
