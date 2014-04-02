@@ -8,6 +8,7 @@
 package group.pals.android.lib.ui.filechooser.utils;
 
 import group.pals.android.lib.ui.filechooser.io.IFile;
+import group.pals.android.lib.ui.filechooser.io.localfile.ParentFile;
 import group.pals.android.lib.ui.filechooser.services.IFileProvider;
 
 import java.util.Comparator;
@@ -45,7 +46,7 @@ public class FileComparator implements Comparator<IFile> {
         if ((lhs.isDirectory() && rhs.isDirectory()) || (lhs.isFile() && rhs.isFile())) {
             // default is to compare by name (case insensitive)
             int res = lhs.getSecondName().compareToIgnoreCase(rhs.getSecondName());
-
+            
             switch (mSortType) {
             case SortByName:
                 break;// SortByName
@@ -64,8 +65,12 @@ public class FileComparator implements Comparator<IFile> {
                     res = -1;
                 break;// SortByDate
             }
-
-            return mSortOrder == IFileProvider.SortOrder.Ascending ? res : -res;
+            //Do not affect the sort on parent item (directs to parent dir)
+            if(lhs.getSecondName().equals(ParentFile.parentSecondName) || rhs.getSecondName().equals(ParentFile.parentSecondName)){
+                return 1;
+            }else{
+                return mSortOrder == IFileProvider.SortOrder.Ascending ? res : -res;
+            }
         }
 
         return lhs.isDirectory() ? -1 : 1;
