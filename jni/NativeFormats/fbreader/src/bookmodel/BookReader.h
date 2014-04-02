@@ -37,6 +37,7 @@ class ZLInputStream;
 class ZLCachedMemoryAllocator;
 class ZLTextStyleEntry;
 class ZLVideoEntry;
+class FontEntry;
 
 class BookReader {
 
@@ -61,6 +62,7 @@ public:
 	bool paragraphIsOpen() const;
 	void addControl(FBTextKind kind, bool start);
 	void addStyleEntry(const ZLTextStyleEntry &entry);
+	void addStyleEntry(const ZLTextStyleEntry &entry, const std::vector<std::string> &fontFamilies);
 	void addStyleCloseEntry();
 	void addHyperlinkControl(FBTextKind kind, const std::string &label);
 	void addHyperlinkLabel(const std::string &label);
@@ -82,6 +84,8 @@ public:
 
 	void enterTitle() { myInsideTitle = true; }
 	void exitTitle() { myInsideTitle = false; }
+
+	std::string putFontEntry(const std::string &family, shared_ptr<FontEntry> fontEntry);
 
 	const BookModel &model() const { return myModel; }
 

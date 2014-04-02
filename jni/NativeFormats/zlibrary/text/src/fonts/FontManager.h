@@ -17,44 +17,29 @@
  * 02110-1301, USA.
  */
 
-#ifndef __FILEENCRYPTIONINFO_H__
-#define __FILEENCRYPTIONINFO_H__
+#ifndef __FONTMANAGER_H__
+#define __FONTMANAGER_H__
 
-#include <map>
 #include <string>
+#include <map>
+#include <vector>
 
 #include <shared_ptr.h>
-#include <ZLDir.h>
 
-class EncryptionMethod {
+#include <FontMap.h>
 
-public:
-	static const std::string NONE;
-	static const std::string UNSUPPORTED;
-	static const std::string EMBEDDING;
-	static const std::string MARLIN;
-};
-
-class FileEncryptionInfo {
+class FontManager {
 
 public:
-	FileEncryptionInfo(const std::string &uri, const std::string &method, const std::string &algorithm, const std::string &contentId);
+	std::string put(const std::string &family, shared_ptr<FontEntry> entry);
+	int familyListIndex(const std::vector<std::string> &familyList);
 
-public:
-	const std::string Uri;
-	const std::string Method;
-	const std::string Algorithm;
-	const std::string ContentId;
-};
-
-class EncryptionMap {
-
-public:
-	void addInfo(const ZLDir &dir, shared_ptr<FileEncryptionInfo> info);
-	shared_ptr<FileEncryptionInfo> info(const std::string &path) const;
+	const std::map<std::string,shared_ptr<FontEntry> > &entries() const;
+	const std::vector<std::vector<std::string> > &familyLists() const;
 
 private:
-	std::map<std::string,shared_ptr<FileEncryptionInfo> > myPathToInfo;
+	std::map<std::string,shared_ptr<FontEntry> > myEntries;
+	std::vector<std::vector<std::string> > myFamilyLists;
 };
 
-#endif /* __FILEENCRYPTIONINFO_H__ */
+#endif /* __FONTMANAGER_H__ */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,30 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.drm;
+#ifndef __STRINGINPUTSTREAM_H__
+#define __STRINGINPUTSTREAM_H__
 
-public interface EncryptionMethod {
-	String NONE = "none";
-	String UNSUPPORTED = "unsupported";
-	String EMBEDDING = "embedding";
-	String MARLIN = "marlin";
-}
+#include <shared_ptr.h>
+#include <ZLInputStream.h>
+
+class StringInputStream : public ZLInputStream {
+
+public:
+	StringInputStream(const char *cstring, std::size_t len);
+
+private:
+	bool open();
+	std::size_t read(char *buffer, std::size_t maxSize);
+	void close();
+
+	void seek(int offset, bool absoluteOffset);
+	std::size_t offset() const;
+	std::size_t sizeOfOpened();
+
+private:
+	const char *myCString;
+	const std::size_t myLength;
+	std::size_t myOffset;
+};
+
+#endif /* __STRINGINPUTSTREAM_H__ */

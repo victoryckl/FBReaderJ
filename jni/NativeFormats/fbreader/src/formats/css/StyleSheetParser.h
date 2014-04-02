@@ -40,7 +40,8 @@ protected:
 public:
 	virtual ~StyleSheetParser();
 	void reset();
-	void parse(const char *text, int len, bool final = false);
+	void parseStream(shared_ptr<ZLInputStream> stream);
+	void parseString(const char *data, std::size_t len);
 
 protected:
 	virtual void storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map);
@@ -48,9 +49,9 @@ protected:
 	virtual void importCSS(const std::string &path);
 
 private:
+	void parse(const char *text, int len, bool final = false);
 	bool isControlSymbol(const char symbol);
-	void processWord(std::string &word);
-	void processWordWithoutComments(const std::string &word);
+	void processWord(const std::string &word);
 	void processControl(const char control);
 
 protected:
@@ -67,7 +68,6 @@ private:
 		ATTRIBUTE_NAME,
 		ATTRIBUTE_VALUE,
 	} myReadState;
-	bool myInsideComment;
 	std::string mySelectorString;
 	StyleSheetTable::AttributeMap myMap;
 	std::vector<std::string> myImportVector;
@@ -80,16 +80,13 @@ class StyleSheetSingleStyleParser : public StyleSheetParser {
 
 public:
 	StyleSheetSingleStyleParser(const std::string &pathPrefix);
-	shared_ptr<ZLTextStyleEntry> parseString(const char *text);
+	shared_ptr<ZLTextStyleEntry> parseSingleEntry(const char *text);
 };
 
 class StyleSheetMultiStyleParser : public StyleSheetParser {
 
 protected:
-	StyleSheetMultiStyleParser(const std::string &pathPrefix, FontMap &map);
-
-public:
-	void parseStream(ZLInputStream &stream);
+	StyleSheetMultiStyleParser(const std::string &pathPrefix, shared_ptr<FontMap> myFontMap);
 
 protected:
 	virtual void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) = 0;
@@ -99,13 +96,13 @@ private:
 	void processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &map);
 
 protected:
-	FontMap &myFontMap;
+	shared_ptr<FontMap> myFontMap;
 };
 
 class StyleSheetTableParser : public StyleSheetMultiStyleParser {
 
 public:
-	StyleSheetTableParser(const std::string &pathPrexix, StyleSheetTable &styleTable, FontMap &fontMap);
+	StyleSheetTableParser(const std::string &pathPrexix, StyleSheetTable &styleTable, shared_ptr<FontMap> fontMap);
 
 private:
 	void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map);
@@ -126,8 +123,8 @@ private:
 	};
 
 public:
-	StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, FontMap &fontMap, shared_ptr<EncryptionMap> encryptionMap);
-	void applyToTable(StyleSheetTable &table) const;
+	StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, shared_ptr<FontMap> fontMap, shared_ptr<EncryptionMap> encryptionMap);
+	void applyToTables(StyleSheetTable &table, FontMap &fontMap) const;
 
 private:
 	void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map);
