@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.text.model;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.fonts.FontManager;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.*;
 
@@ -40,6 +41,8 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 	protected final Map<String,ZLImage> myImageMap;
 
 	private ArrayList<ZLTextMark> myMarks;
+
+	private final FontManager myFontManager;
 
 	final class EntryIteratorImpl implements ZLTextParagraph.EntryIterator {
 		private int myCounter;
@@ -213,9 +216,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 						entry.setAlignmentType((byte)(value & 0xFF));
 					}
 					if (ZLTextStyleEntry.isFeatureSupported(mask, FONT_FAMILY)) {
-						final short familyLength = (short)data[dataOffset++];
-						entry.setFontFamily(new String(data, dataOffset, familyLength));
-						dataOffset += familyLength;
+						entry.setFontFamilies(myFontManager, (short)data[dataOffset++]);
 					}
 					if (ZLTextStyleEntry.isFeatureSupported(mask, FONT_STYLE_MODIFIER)) {
 						final short value = (short)data[dataOffset++];
@@ -263,7 +264,8 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		int[] textSizes,
 		byte[] paragraphKinds,
 		CharStorage storage,
-		Map<String,ZLImage> imageMap
+		Map<String,ZLImage> imageMap,
+		FontManager fontManager
 	) {
 		myId = id;
 		myLanguage = language;
@@ -274,6 +276,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		myParagraphKinds = paragraphKinds;
 		myStorage = storage;
 		myImageMap = imageMap;
+		myFontManager = fontManager;
 	}
 
 	public final String getId() {

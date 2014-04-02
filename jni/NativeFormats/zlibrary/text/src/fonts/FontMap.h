@@ -17,44 +17,39 @@
  * 02110-1301, USA.
  */
 
-#ifndef __FILEENCRYPTIONINFO_H__
-#define __FILEENCRYPTIONINFO_H__
+#ifndef __FONTMAP_H__
+#define __FONTMAP_H__
 
-#include <map>
 #include <string>
+#include <map>
 
 #include <shared_ptr.h>
-#include <ZLDir.h>
 
-class EncryptionMethod {
+class FontEntry {
 
 public:
-	static const std::string NONE;
-	static const std::string UNSUPPORTED;
-	static const std::string EMBEDDING;
-	static const std::string MARLIN;
+	void addFile(bool bold, bool italic, const std::string &filePath);
+	void merge(const FontEntry &fontEntry);
+
+	bool operator == (const FontEntry &other) const;
+	bool operator != (const FontEntry &other) const;
+
+public:
+	shared_ptr<std::string> Normal;
+	shared_ptr<std::string> Bold;
+	shared_ptr<std::string> Italic;
+	shared_ptr<std::string> BoldItalic;
 };
 
-class FileEncryptionInfo {
+class FontMap {
 
 public:
-	FileEncryptionInfo(const std::string &uri, const std::string &method, const std::string &algorithm, const std::string &contentId);
-
-public:
-	const std::string Uri;
-	const std::string Method;
-	const std::string Algorithm;
-	const std::string ContentId;
-};
-
-class EncryptionMap {
-
-public:
-	void addInfo(const ZLDir &dir, shared_ptr<FileEncryptionInfo> info);
-	shared_ptr<FileEncryptionInfo> info(const std::string &path) const;
+	void append(const std::string &family, bool bold, bool italic, const std::string &path);
+	void merge(const FontMap &fontMap);
+	shared_ptr<FontEntry> get(const std::string &family);
 
 private:
-	std::map<std::string,shared_ptr<FileEncryptionInfo> > myPathToInfo;
+	std::map<std::string,shared_ptr<FontEntry> > myMap;
 };
 
-#endif /* __FILEENCRYPTIONINFO_H__ */
+#endif /* __FONTMAP_H__ */

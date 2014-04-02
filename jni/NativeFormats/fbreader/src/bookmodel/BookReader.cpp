@@ -55,7 +55,7 @@ void BookReader::setFootnoteTextModel(const std::string &id) {
 		if (myFootnotesAllocator.isNull()) {
 			myFootnotesAllocator = new ZLCachedMemoryAllocator(8192, Library::Instance().cacheDirectory(), "footnotes");
 		}
-		myCurrentTextModel = new ZLTextPlainModel(id, myModel.myBookTextModel->language(), myFootnotesAllocator);
+		myCurrentTextModel = new ZLTextPlainModel(id, myModel.myBookTextModel->language(), myFootnotesAllocator, myModel.myFontManager);
 		myModel.myFootnotes.insert(std::make_pair(id, myCurrentTextModel));
 	}
 }
@@ -120,6 +120,13 @@ void BookReader::addControl(FBTextKind kind, bool start) {
 	}
 	if (!start && !myHyperlinkReference.empty() && (kind == myHyperlinkKind)) {
 		myHyperlinkReference.erase();
+	}
+}
+
+void BookReader::addStyleEntry(const ZLTextStyleEntry &entry, const std::vector<std::string> &fontFamilies) {
+	if (paragraphIsOpen()) {
+		flushTextBufferToParagraph();
+		myCurrentTextModel->addStyleEntry(entry, fontFamilies);
 	}
 }
 
@@ -309,6 +316,10 @@ void BookReader::endContentsParagraph() {
 		myContentsTreeStack.pop();
 	}
 	myContentsParagraphExists = false;
+}
+
+std::string BookReader::putFontEntry(const std::string &family, shared_ptr<FontEntry> fontEntry) {
+	return myModel.myFontManager.put(family, fontEntry);
 }
 
 /*
