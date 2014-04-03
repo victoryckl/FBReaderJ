@@ -1418,10 +1418,6 @@ public class FileChooserActivity extends Activity {
         LayoutInflater inflater = getLayoutInflater();
         int count = 0;
         while (path != null) {
-            if(path.parentFile() == null){
-                path = path.parentFile();
-                continue;
-            }
             TextView btnLoc = (TextView) inflater.inflate(R.layout.afc_button_location, null);
             btnLoc.setText(path.parentFile() != null ? "/"+path.getName() : getString(R.string.afc_root));
             btnLoc.setTag(path);
