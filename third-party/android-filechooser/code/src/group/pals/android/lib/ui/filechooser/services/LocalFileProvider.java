@@ -142,7 +142,7 @@ public class LocalFileProvider extends FileProviderService {
     public List<IFile> listAllFiles(IFile dir, final IFileFilter filter) {
         if (!(dir instanceof File))
             return null;
-        System.out.println("--------------------------");
+        
         final List<IFile> _res = new ArrayList<IFile>();
         try {
             IFile root = dir.parentFile();
@@ -154,7 +154,6 @@ public class LocalFileProvider extends FileProviderService {
                 @Override
                 public boolean accept(File pathname) {
                     LocalFile file = new LocalFile(pathname);
-                    System.out.println("> "+pathname.getName());
                     if (filter == null || filter.accept(file))
                         _res.add(file);
                     return false;

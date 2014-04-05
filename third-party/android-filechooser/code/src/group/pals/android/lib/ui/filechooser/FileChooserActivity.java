@@ -291,6 +291,9 @@ public class FileChooserActivity extends Activity {
     private EditText mTxtSaveas;
     private ImageView mViewGoBack;
     private ImageView mViewGoForward;
+    private ImageView mViewCreateFolder;
+    private ImageView mViewFoldersView;
+    private ImageView mViewSort;
 
     /** Called when the activity is first created. */
     @Override
@@ -335,6 +338,9 @@ public class FileChooserActivity extends Activity {
 
         // load controls
 
+        mViewSort = (ImageView) findViewById(R.id.afc_filechooser_activity_button_sort);
+        mViewFoldersView = (ImageView) findViewById(R.id.afc_filechooser_activity_button_folders_view);
+        mViewCreateFolder = (ImageView) findViewById(R.id.afc_filechooser_activity_button_create_folder);
         mViewGoBack = (ImageView) findViewById(R.id.afc_filechooser_activity_button_go_back);
         mViewGoForward = (ImageView) findViewById(R.id.afc_filechooser_activity_button_go_forward);
         mViewLocations = (ViewGroup) findViewById(R.id.afc_filechooser_activity_view_locations);
@@ -396,57 +402,12 @@ public class FileChooserActivity extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        /*
-         * sorting
-         */
-
-        final boolean _sortAscending = DisplayPrefs.isSortAscending(this);
-        MenuItem miSort = menu.findItem(R.id.afc_filechooser_activity_menuitem_sort);
-
-        switch (DisplayPrefs.getSortType(this)) {
-        case SortByName:
-            miSort.setIcon(_sortAscending ? R.drawable.afc_ic_menu_sort_by_name_asc
-                    : R.drawable.afc_ic_menu_sort_by_name_desc);
-            break;
-        case SortBySize:
-            miSort.setIcon(_sortAscending ? R.drawable.afc_ic_menu_sort_by_size_asc
-                    : R.drawable.afc_ic_menu_sort_by_size_desc);
-            break;
-        case SortByDate:
-            miSort.setIcon(_sortAscending ? R.drawable.afc_ic_menu_sort_by_date_asc
-                    : R.drawable.afc_ic_menu_sort_by_date_desc);
-            break;
-        }
-
-        /*
-         * view type
-         */
-
-        MenuItem menuItem = menu.findItem(R.id.afc_filechooser_activity_menuitem_switch_viewmode);
-        switch (DisplayPrefs.getViewType(this)) {
-        case Grid:
-            menuItem.setIcon(R.drawable.afc_ic_menu_listview);
-            menuItem.setTitle(R.string.afc_cmd_list_view);
-            break;
-        case List:
-            menuItem.setIcon(R.drawable.afc_ic_menu_gridview);
-            menuItem.setTitle(R.string.afc_cmd_grid_view);
-            break;
-        }
-
         return true;
     }// onPrepareOptionsMenu()
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getGroupId() == R.id.afc_filechooser_activity_menugroup_sorter) {
-            doResortViewFiles();
-        }// group_sorter
-        else if (item.getItemId() == R.id.afc_filechooser_activity_menuitem_new_folder) {
-            doCreateNewDir();
-        } else if (item.getItemId() == R.id.afc_filechooser_activity_menuitem_switch_viewmode) {
-            doSwitchViewType();
-        } else if (item.getItemId() == R.id.afc_filechooser_activity_menuitem_home) {
+        if (item.getItemId() == R.id.afc_filechooser_activity_menuitem_home) {
             doGoHome();
         } else if (item.getItemId() == R.id.afc_filechooser_activity_menuitem_reload) {
             doReloadCurrentLocation();
@@ -702,6 +663,28 @@ public class FileChooserActivity extends Activity {
             }
         }// title of activity
 
+        mViewSort.setOnClickListener(mBtnSortOnClickListener);
+        if(DisplayPrefs.isSortAscending(this)){
+            mViewSort.setImageDrawable(getResources().getDrawable(R.drawable.afc_selector_button_sort_as));
+            mViewSort.setId(R.drawable.afc_selector_button_sort_as);
+        }else{
+            mViewSort.setImageDrawable(getResources().getDrawable(R.drawable.afc_selector_button_sort_de));
+            mViewSort.setId(R.drawable.afc_selector_button_sort_de);
+        }
+
+        mViewFoldersView.setOnClickListener(mBtnFoldersViewOnClickListener);
+        switch (DisplayPrefs.getViewType(this)) {
+        case List:
+            mViewFoldersView.setImageDrawable(getResources().getDrawable(R.drawable.afc_selector_button_folders_view_grid));
+            mViewFoldersView.setId(R.drawable.afc_selector_button_folders_view_grid);
+            break;
+        case Grid:
+            mViewFoldersView.setImageDrawable(getResources().getDrawable(R.drawable.afc_selector_button_folders_view_list));
+            mViewFoldersView.setId(R.drawable.afc_selector_button_folders_view_list);
+            break;
+        }
+        mViewCreateFolder.setOnClickListener(mBtnCreateFolderOnClickListener);
+        
         mViewGoBack.setEnabled(false);
         mViewGoBack.setOnClickListener(mBtnGoBackOnClickListener);
 
@@ -910,8 +893,15 @@ public class FileChooserActivity extends Activity {
                     DisplayPrefs.setSortType(c, SortType.SortByDate);
                     DisplayPrefs.setSortAscending(c, false);
                 }
-
+                
                 resortViewFiles();
+                if(DisplayPrefs.isSortAscending(c)){
+                    mViewSort.setImageDrawable(getResources().getDrawable(R.drawable.afc_selector_button_sort_as));
+                    mViewSort.setId(R.drawable.afc_selector_button_sort_as);
+                }else{
+                    mViewSort.setImageDrawable(getResources().getDrawable(R.drawable.afc_selector_button_sort_de));
+                    mViewSort.setId(R.drawable.afc_selector_button_sort_de);
+                }
             }// onClick()
         };// listener
 
@@ -1536,6 +1526,39 @@ public class FileChooserActivity extends Activity {
     /**********************************************************
      * BUTTON LISTENERS
      */
+    private final View.OnClickListener mBtnSortOnClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            doResortViewFiles();
+        }
+    };// mBtnSortOnClickListener
+
+
+    private final View.OnClickListener mBtnFoldersViewOnClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            doSwitchViewType();
+            if(mViewFoldersView.getId() == R.drawable.afc_selector_button_folders_view_list){
+                mViewFoldersView.setImageDrawable(getResources().getDrawable(R.drawable.afc_selector_button_folders_view_grid));
+                mViewFoldersView.setId(R.drawable.afc_selector_button_folders_view_grid);
+            }else{
+                mViewFoldersView.setImageDrawable(getResources().getDrawable(R.drawable.afc_selector_button_folders_view_list));
+                mViewFoldersView.setId(R.drawable.afc_selector_button_folders_view_list);
+            }
+        }
+    };// mBtnFoldersViewOnClickListener
+
+
+    private final View.OnClickListener mBtnCreateFolderOnClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            doCreateNewDir();   
+        }
+    };// mBtnCreateFolderOnClickListener
+
 
     private final View.OnClickListener mBtnGoBackOnClickListener = new View.OnClickListener() {
 
