@@ -1387,8 +1387,10 @@ public class FileChooserActivity extends Activity {
                     if(mFileProvider.getFilterMode() != IFileProvider.FilterMode.AnyDirectories){
                         if(!(((File) dir).canWrite()) ){
                             mBtnOk.setEnabled(false);
+                            mViewCreateFolder.setEnabled(false);
                         }else{
                             mBtnOk.setEnabled(true);
+                            mViewCreateFolder.setEnabled(true);
                         }
                     }
                 }
