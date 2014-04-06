@@ -113,7 +113,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
         
 		final Screen directoriesScreen = createPreferenceScreen("directories");
         ZLFileChooserPreference fileChooserRef = new ZLFileChooserPreference(
-            this, directoriesScreen.Resource, "books", Paths.BookPathOption, BOOKS_CHOOSER_CODE
+            this, directoriesScreen.Resource, "bookPath", Paths.BookPathOption, BOOKS_CHOOSER_CODE
         ){
             protected void setValue(String value) {
 				super.setValue(value);
@@ -131,12 +131,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
         myPreferenceMap.put(BOOKS_CHOOSER_CODE, fileChooserRef);
 		
         fileChooserRef = new ZLFileChooserPreference(
-			this, directoriesScreen.Resource, "fonts", Paths.FontPathOption, FONTS_CHOOSER_CODE);
+			this, directoriesScreen.Resource, "fontPath", Paths.FontPathOption, FONTS_CHOOSER_CODE);
         directoriesScreen.addPreference(fileChooserRef);
         myPreferenceMap.put(FONTS_CHOOSER_CODE, fileChooserRef);
 
 		fileChooserRef = new ZLFileChooserPreference(
-			this, directoriesScreen.Resource, "wallpapers", Paths.WallpaperPathOption, WALLPAPER_CHOOSER_CODE);
+			this, directoriesScreen.Resource, "wallpaperPath", Paths.WallpaperPathOption, WALLPAPER_CHOOSER_CODE);
         directoriesScreen.addPreference(fileChooserRef);
         myPreferenceMap.put(WALLPAPER_CHOOSER_CODE, fileChooserRef);
 
