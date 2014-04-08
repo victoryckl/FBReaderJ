@@ -311,9 +311,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Каталоги">
 			<node name="summary" value="Где искать файлы"/>
-			<node name="books" value="Каталог с книгами"/>
-			<node name="fonts" value="Каталог со шрифтами"/>
-			<node name="wallpapers" value="Каталог с обоями"/>
 			<node name="bookPath" value="Где лежат книги"/>
 			<node name="downloadDir" value="Куда сохранять загруженные книги"/>
 			<node name="fontPath" value="Где лежат шрифты"/>
@@ -864,6 +861,10 @@
 			<node name="initializationText" value="Хотите ли вы раз в день получать советы по использованию FBReader? Новые советы будут загружаться с сервера FBReader. Это потребует скачивания 1-2 килобайт в неделю.&#10;&#10;Включить советы?"/>
 			<node name="dontShowAgain" value="Больше не показывать"/>
 			<node name="more" value="Ещё"/>
+		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader запускается в полноэкранном режиме. Чтобы увидеть элементы управления, нажмите на экран в средней трети. Вы можете изменить это поведение в разделе «Внешний вид» диалога настроек." toBeTranslated="true"/>
+			<node name="message2" value="Отлично! Нажмите ещё раз на экран в средней трети, чтобы скрыть элементы управления и этот совет. Если вы хотите, чтобы верхнее меню оставалось на экране во время чтения, выберите «Показывать строку меню» в разделе «Внешний вид» диалога настроек." toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">

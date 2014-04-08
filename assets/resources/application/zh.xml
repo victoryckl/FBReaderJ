@@ -296,9 +296,6 @@
 	<node name="Preferences">
 		<node name="directories" value="文件夹设定">
 			<node name="summary" value="相关文件夹位置设定"/>
-			<node name="books" value="书文存放位置"/>
-			<node name="fonts" value="字体存放位置"/>
-			<node name="wallpapers" value="墙纸存放位置"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
@@ -849,6 +846,10 @@
 			<node name="initializationText" value="你希望阅读FBReader每日提示吗? 新的提示将从FBReader网站下载. 每周使用流量大约 1-2 K字节.&#10;&#10;启用小提示吗?"/>
 			<node name="dontShowAgain" value="不要再显示"/>
 			<node name="more" value="下个提示"/>
+		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">

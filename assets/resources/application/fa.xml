@@ -306,9 +306,6 @@
 	<node name="Preferences">
 		<node name="directories" value="پوشه ها">
 			<node name="summary" value="پوشه های جستجوی فایل ها"/>
-			<node name="books" value="پوشه کتابها"/>
-			<node name="fonts" value="پوشه فونتها"/>
-			<node name="wallpapers" value="پوشه تصاویر"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
@@ -859,6 +856,10 @@
 			<node name="initializationText" value="تمايل داريد رئوس روزانه اف بي ريدر را بخوانيد؟ رئوس جدي از سايت اف بي ريدر دانلود مي شود. ترافيك شبكه مورد انتظار 1-2 كيلوبايت در هفته است. فعال سازي رئوس؟"/>
 			<node name="dontShowAgain" value="عدم نمايش مجدد"/>
 			<node name="more" value="راس بعدي"/>
+		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">
