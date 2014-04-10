@@ -61,13 +61,18 @@ void JavaInputStream::initStream(JNIEnv *env) {
 
 	if (env->ExceptionCheck()) {
 		env->ExceptionClear();
-	} else {
-		myJavaInputStream = env->NewGlobalRef(stream);
-		myOffset = 0;
-		myMarkSupported = AndroidUtil::Method_java_io_InputStream_markSupported->call(stream);
-		if (myMarkSupported) {
-			AndroidUtil::Method_java_io_InputStream_mark->call(stream, sizeOfOpened());
-		}
+		return;
+	}
+
+	if (stream == 0) {
+		return;
+	}
+
+	myJavaInputStream = env->NewGlobalRef(stream);
+	myOffset = 0;
+	myMarkSupported = AndroidUtil::Method_java_io_InputStream_markSupported->call(stream);
+	if (myMarkSupported) {
+		AndroidUtil::Method_java_io_InputStream_mark->call(stream, sizeOfOpened());
 	}
 	env->DeleteLocalRef(stream);
 }

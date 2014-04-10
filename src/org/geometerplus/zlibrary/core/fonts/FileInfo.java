@@ -17,21 +17,18 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.drm;
+package org.geometerplus.zlibrary.core.fonts;
 
+import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
-public class FileEncryptionInfo {
-	public final String Uri;
-	public final String Method;
-	public final String Algorithm;
-	public final String ContentId;
+public final class FileInfo {
+	public final String Path;
+	public final FileEncryptionInfo EncryptionInfo;
 
-	public FileEncryptionInfo(String uri, String method, String algorithm, String contentId) {
-		Uri = uri;
-		Method = method;
-		Algorithm = algorithm;
-		ContentId = contentId;
+	public FileInfo(String path, FileEncryptionInfo encryptionInfo) {
+		Path = path;
+		EncryptionInfo = encryptionInfo;
 	}
 
 	@Override
@@ -39,23 +36,15 @@ public class FileEncryptionInfo {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof FileEncryptionInfo)) {
+		if (!(other instanceof FileInfo)) {
 			return false;
 		}
-		final FileEncryptionInfo oInfo = (FileEncryptionInfo)other;
-		return
-			MiscUtil.equals(Uri, oInfo.Uri) &&
-			MiscUtil.equals(Method, oInfo.Method) &&
-			MiscUtil.equals(Algorithm, oInfo.Algorithm) &&
-			MiscUtil.equals(ContentId, oInfo.ContentId);
+		final FileInfo oInfo = (FileInfo)other;
+		return Path.equals(oInfo.Path) && MiscUtil.equals(EncryptionInfo, oInfo.EncryptionInfo);
 	}
 
 	@Override
 	public int hashCode() {
-		return
-			MiscUtil.hashCode(Uri) +
-			23 * (MiscUtil.hashCode(Method) +
-				  23 * (MiscUtil.hashCode(Algorithm) +
-						23 * MiscUtil.hashCode(ContentId)));
+		return Path.hashCode() + 23 * MiscUtil.hashCode(EncryptionInfo);
 	}
 }
