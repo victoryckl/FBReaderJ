@@ -114,7 +114,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen directoriesScreen = createPreferenceScreen("directories");
         ZLFileChooserPreference fileChooserRef = new ZLFileChooserPreference(
             this, directoriesScreen.Resource, "bookPath", Paths.BookPathOption, BOOKS_CHOOSER_CODE
-        ){
+        ) {
             protected void setValue(String value) {
 				super.setValue(value);
 				
@@ -139,6 +139,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, directoriesScreen.Resource, "wallpaperPath", Paths.WallpaperPathOption, WALLPAPER_CHOOSER_CODE);
         directoriesScreen.addPreference(fileChooserRef);
         myPreferenceMap.put(WALLPAPER_CHOOSER_CODE, fileChooserRef);
+
+		directoriesScreen.addOption(Paths.TempDirectoryOption(), "tempDir");
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(
