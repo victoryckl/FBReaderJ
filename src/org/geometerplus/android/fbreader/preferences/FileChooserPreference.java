@@ -19,48 +19,43 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.view.View;
+
+import group.pals.android.lib.ui.filechooser.FileChooserActivity;
+import group.pals.android.lib.ui.filechooser.services.IFileProvider;
+import group.pals.android.lib.ui.filechooser.io.localfile.LocalFile;
 
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
-import android.app.Activity;
-
-import org.geometerplus.android.fbreader.preferences.PreferenceActivity;
-
-import android.os.Parcelable;
-import android.content.Intent;
-import group.pals.android.lib.ui.filechooser.FileChooserActivity;
-import group.pals.android.lib.ui.filechooser.services.IFileProvider;
-import group.pals.android.lib.ui.filechooser.services.IFileProvider.FilterMode;
-import group.pals.android.lib.ui.filechooser.io.localfile.LocalFile;
-
 public abstract class FileChooserPreference extends Preference {
-    protected int myRegCode = 0;
-	
-    protected abstract void setValue(String value);
-    
-    protected FileChooserPreference(Context context) {
+	protected int myRegCode = 0;
+
+	protected abstract void setValue(String value);
+
+	protected FileChooserPreference(Context context) {
 		super(context);
 	}
-    
-    protected abstract String getPath();
+
+	protected abstract String getPath();
 
 	@Override
 	protected void onClick() {
-        Intent intent = new Intent(getContext(), FileChooserActivity.class);
-        intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(getPath()));
-        intent.putExtra(FileChooserActivity._ActionBar, true);
-        intent.putExtra(FileChooserActivity._SaveLastLocation, false);
-        //intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.AnyDirectories);
-        //intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.FilesOnly);
-        //intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.FilesAndDirectories);
-        intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
-        ((Activity)getContext()).startActivityForResult(intent, myRegCode);
+		Intent intent = new Intent(getContext(), FileChooserActivity.class);
+		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(getPath()));
+		intent.putExtra(FileChooserActivity._ActionBar, true);
+		intent.putExtra(FileChooserActivity._SaveLastLocation, false);
+		//intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.AnyDirectories);
+		//intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.FilesOnly);
+		//intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.FilesAndDirectories);
+		intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
+		((Activity)getContext()).startActivityForResult(intent, myRegCode);
 	}
 }
