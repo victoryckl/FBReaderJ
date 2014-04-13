@@ -58,10 +58,10 @@ import android.preference.Preference;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
 	private final HashMap<Integer,Preference> myPreferenceMap = new HashMap<Integer,Preference>();
-    private static final int BOOKS_CHOOSER_CODE = 501; 
-    private static final int FONTS_CHOOSER_CODE = 502; 
-    private static final int WALLPAPER_CHOOSER_CODE = 503; 
-	
+    private static final int BOOKS_CHOOSER_CODE = 501;
+    private static final int FONTS_CHOOSER_CODE = 502;
+    private static final int WALLPAPER_CHOOSER_CODE = 503;
+
     public PreferenceActivity() {
 		super("Preferences");
 	}
@@ -110,14 +110,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		// or set user-defined locale as default
 		final String decimalSeparator =
 			String.valueOf(new DecimalFormatSymbols(Locale.getDefault()).getDecimalSeparator());
-        
+
 		final Screen directoriesScreen = createPreferenceScreen("directories");
         ZLFileChooserPreference fileChooserRef = new ZLFileChooserPreference(
             this, directoriesScreen.Resource, "bookPath", Paths.BookPathOption, BOOKS_CHOOSER_CODE
         ) {
             protected void setValue(String value) {
 				super.setValue(value);
-				
+
                 final BookCollectionShadow collection = new BookCollectionShadow();
 				collection.bindToService(PreferenceActivity.this, new Runnable() {
 					public void run() {
@@ -129,7 +129,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
         };
         directoriesScreen.addPreference(fileChooserRef);
         myPreferenceMap.put(BOOKS_CHOOSER_CODE, fileChooserRef);
-		
+
         fileChooserRef = new ZLFileChooserPreference(
 			this, directoriesScreen.Resource, "fontPath", Paths.FontPathOption, FONTS_CHOOSER_CODE);
         directoriesScreen.addPreference(fileChooserRef);
@@ -209,12 +209,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			appearanceScreen.addOption(androidLibrary.EnableFullscreenModeOption, "fullscreenMode");
 		}
 		appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
-		
+
 		if (DeviceType.Instance().isEInk()) {
 			final EInkOptions einkOptions = new EInkOptions();
 			final Screen einkScreen = createPreferenceScreen("eink");
 			final ZLPreferenceSet einkPreferences = new ZLPreferenceSet();
-			
+
 			einkScreen.addPreference(new ZLBooleanPreference(
 				this, einkOptions.EnableFastRefresh, einkScreen.Resource, "enableFastRefresh"
 			) {
@@ -224,12 +224,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
 				}
 			});
-	
+
 			final ZLIntegerRangePreference updateIntervalPreference = new ZLIntegerRangePreference(
 				this, einkScreen.Resource.getResource("interval"), einkOptions.UpdateInterval
 			);
 			einkScreen.addPreference(updateIntervalPreference);
-	
+
 			einkPreferences.add(updateIntervalPreference);
 			einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
 		}
