@@ -24,16 +24,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.preference.Preference;
-import android.view.View;
 
 import group.pals.android.lib.ui.filechooser.FileChooserActivity;
 import group.pals.android.lib.ui.filechooser.services.IFileProvider;
 import group.pals.android.lib.ui.filechooser.io.localfile.LocalFile;
-
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
-
-import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 public abstract class FileChooserPreference extends Preference {
 	protected int myRegCode = 0;
