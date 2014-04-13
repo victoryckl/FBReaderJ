@@ -24,8 +24,11 @@ import java.util.*;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.view.KeyEvent;
 import android.os.Build;
+import android.preference.Preference;
+import android.view.KeyEvent;
+
+import group.pals.android.lib.ui.filechooser.FileChooserActivity;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.language.Language;
@@ -48,13 +51,6 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 import org.geometerplus.android.util.DeviceType;
-
-import android.os.Parcelable;
-import android.content.Intent;
-import java.io.File;
-import group.pals.android.lib.ui.filechooser.FileChooserActivity;
-import group.pals.android.lib.ui.filechooser.io.localfile.LocalFile;
-import android.preference.Preference;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
 	private final HashMap<Integer,Preference> myPreferenceMap = new HashMap<Integer,Preference>();
