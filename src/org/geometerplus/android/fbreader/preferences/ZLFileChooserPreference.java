@@ -31,40 +31,40 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 class ZLFileChooserPreference extends FileChooserPreference {
-    private ZLStringListOption myOption;
-    private String myPath = "";
-    
+	private ZLStringListOption myOption;
+	private String myPath = "";
+
 	ZLFileChooserPreference(Context context, ZLResource rootResource, String resourceKey, ZLStringListOption option, int regCode) {
 		super(context);
-        
-        myOption = option;
-        myRegCode = regCode;
-		
-        ZLResource resource = rootResource.getResource(resourceKey);
-		setTitle(resource.getValue());
-        setSummary(getPath());
-	}
-    
-    @Override
-    public void setSummary(CharSequence summary){
-        if(summary.length() != 0 && !myPath.equals(summary.toString())){
-            super.setSummary(summary);
-            setValue(summary.toString());
-            myPath = summary.toString();
-        }
-    }
-    
-    protected void setValue(String value){
-        final List<String> optionValues = new ArrayList<String>(myOption.getValue());
-        if (optionValues.isEmpty()) {
-            optionValues.add(value);
-        } else {
-            optionValues.set(0, value);
-        }
-        myOption.setValue(optionValues);
-    }
 
-    protected String getPath(){
+		myOption = option;
+		myRegCode = regCode;
+
+		ZLResource resource = rootResource.getResource(resourceKey);
+		setTitle(resource.getValue());
+		setSummary(getPath());
+	}
+
+	@Override
+	public void setSummary(CharSequence summary) {
+		if (summary.length() != 0 && !myPath.equals(summary.toString())) {
+			super.setSummary(summary);
+			setValue(summary.toString());
+			myPath = summary.toString();
+		}
+	}
+
+	protected void setValue(String value) {
+		final List<String> optionValues = new ArrayList<String>(myOption.getValue());
+		if (optionValues.isEmpty()) {
+			optionValues.add(value);
+		} else {
+			optionValues.set(0, value);
+		}
+		myOption.setValue(optionValues);
+	}
+
+	protected String getPath() {
 		return myOption.getValue().isEmpty() ? "" : myOption.getValue().get(0);
-    }
+	}
 }
